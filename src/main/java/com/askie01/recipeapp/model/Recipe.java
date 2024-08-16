@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "recipes")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
@@ -39,8 +40,8 @@ public class Recipe {
     private Difficulty difficulty;
 
     @ManyToMany
-    @JoinTable(name = "recipe_categories",
-    joinColumns = @JoinColumn(name = "recipe_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JoinTable(name = "recipes_categories",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 }

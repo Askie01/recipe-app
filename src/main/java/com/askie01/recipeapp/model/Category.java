@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {

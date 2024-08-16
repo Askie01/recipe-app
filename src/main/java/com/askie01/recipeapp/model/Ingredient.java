@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
+@Table(name = "ingredients")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ingredient {

@@ -5,6 +5,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
@@ -15,11 +16,11 @@ import java.util.Set;
 @Table(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Category extends BaseEntity {
 
     private String name;
 
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes = new HashSet<>();
-
 }

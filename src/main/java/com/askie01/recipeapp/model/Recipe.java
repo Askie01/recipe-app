@@ -4,8 +4,10 @@ import com.askie01.recipeapp.constant.Difficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -13,35 +15,26 @@ import java.util.Set;
 @Table(name = "recipes")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+@EqualsAndHashCode(callSuper = true)
+public class Recipe extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String name;
     private String description;
-    private Integer preparationTime;
-    private Integer cookTime;
     private Integer servings;
-    private String source;
-    private String url;
-    private String directions;
-
-    @Column(columnDefinition = "BLOB")
-    private byte[] image;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Note note;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Integer preparationTime;
+    private String instructions;
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
     @ManyToMany
-    @JoinTable(name = "recipes_categories",
+    @JoinTable(
+            name = "recipes_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients = new HashSet<>();
 }

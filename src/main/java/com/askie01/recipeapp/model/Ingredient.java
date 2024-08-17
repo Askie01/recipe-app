@@ -1,8 +1,11 @@
 package com.askie01.recipeapp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -12,18 +15,12 @@ import java.math.BigDecimal;
 @Table(name = "ingredients")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ingredient {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Ingredient extends BaseEntity {
 
     private String name;
     private BigDecimal amount;
 
     @ManyToOne
     private Recipe recipe;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    private MeasureUnit measureUnit;
 }

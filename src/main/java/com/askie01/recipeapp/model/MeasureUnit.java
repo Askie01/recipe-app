@@ -1,6 +1,7 @@
 package com.askie01.recipeapp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "measure_units")
 @NoArgsConstructor
 @AllArgsConstructor
-public class MeasureUnit {
+public class MeasureUnit extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
 }

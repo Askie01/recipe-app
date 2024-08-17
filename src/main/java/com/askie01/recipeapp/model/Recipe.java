@@ -14,19 +14,17 @@ import java.util.Set;
 @Table(name = "recipes")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+public class Recipe extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String description;
-    private Integer preparationTime;
-    private Integer cookTime;
-    private Integer servings;
-    private String source;
+    private String name;
     private String url;
-    private String directions;
+    private String source;
+    private Integer servings;
+    private String instructions;
+    private Integer preparationTime;
+
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
     @Column(columnDefinition = "BLOB")
     private byte[] image;
@@ -37,12 +35,10 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty;
-
     @ManyToMany
     @JoinTable(name = "recipes_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
 }

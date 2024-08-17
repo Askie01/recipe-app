@@ -12,11 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "ingredients")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ingredient {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Ingredient extends BaseEntity {
 
     private String name;
     private BigDecimal amount;

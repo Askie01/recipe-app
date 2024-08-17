@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "unit_measures")
+@Table(name = "measure_units")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UnitMeasure {
+public class MeasureUnit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

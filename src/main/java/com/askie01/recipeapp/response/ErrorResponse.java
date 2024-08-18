@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponse {
-    private String path;
+    private Integer code;
     private String message;
-    private Integer status;
+    private String path;
     private LocalDateTime time;
 }

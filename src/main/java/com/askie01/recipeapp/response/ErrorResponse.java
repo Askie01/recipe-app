@@ -3,7 +3,6 @@ package com.askie01.recipeapp.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +12,6 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
     private String path;
     private String message;
-    private HttpStatus code;
+    private Integer status;
     private LocalDateTime time;
 }

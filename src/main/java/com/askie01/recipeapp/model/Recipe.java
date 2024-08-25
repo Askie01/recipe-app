@@ -32,6 +32,6 @@ public class Recipe extends NamedEntity {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients = new HashSet<>();
 }

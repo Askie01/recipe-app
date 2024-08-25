@@ -26,7 +26,7 @@ public class Recipe extends NamedEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "recipes_categories",
+            name = "recipe_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )

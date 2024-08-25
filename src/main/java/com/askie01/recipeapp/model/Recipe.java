@@ -1,6 +1,6 @@
 package com.askie01.recipeapp.model;
 
-import com.askie01.recipeapp.constant.Difficulty;
+import com.askie01.recipeapp.constant.DifficultyLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class Recipe extends NamedEntity {
     private String instructions;
 
     @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty;
+    private DifficultyLevel difficultyLevel;
 
     @ManyToMany
     @JoinTable(

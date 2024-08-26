@@ -3,7 +3,7 @@ package com.askie01.recipeapp.controller;
 import com.askie01.recipeapp.constant.RecipeConstant;
 import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.response.Response;
-import com.askie01.recipeapp.services.RecipeService;
+import com.askie01.recipeapp.service.RecipeService;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

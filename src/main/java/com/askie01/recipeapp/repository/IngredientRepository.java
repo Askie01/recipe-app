@@ -1,12 +1,12 @@
 package com.askie01.recipeapp.repository;
 
-import com.askie01.recipeapp.model.Category;
+import com.askie01.recipeapp.model.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Optional<Category> findByName(String name);
+public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
+    Optional<Ingredient> findByName(String name);
 }

@@ -1,10 +1,12 @@
 package com.askie01.recipeapp.controller;
 
-import com.askie01.recipeapp.model.Recipe;
+import com.askie01.recipeapp.constant.RecipeConstant;
+import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.response.Response;
-import com.askie01.recipeapp.service.RecipeService;
+import com.askie01.recipeapp.services.RecipeService;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,14 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Data
 @RestController
-@RequestMapping(path = "recipe")
+@RequestMapping(value = "recipe", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @PostMapping("create")
-    private ResponseEntity<Response> createRecipe(@RequestBody Recipe recipe) {
-        recipeService.createRecipe(recipe);
-        return new ResponseEntity<>(new Response(), HttpStatus.OK);
+    @PostMapping(path = "save")
+    public ResponseEntity<Response> createRecipe(@RequestBody RecipeDTO recipeDTO) {
+        recipeService.create(recipeDTO);
+        return new ResponseEntity<>(
+                new Response(RecipeConstant.RECIPE_CREATED_CODE, RecipeConstant.RECIPE_CREATED_MESSAGE),
+                HttpStatus.CREATED
+        );
     }
 }

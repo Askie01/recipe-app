@@ -1,5 +1,5 @@
 package com.askie01.recipeapp.constant;
 
-public enum Difficulty {
+public enum DifficultyLevel {
     EASY, MEDIUM, HARD
 }

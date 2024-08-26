@@ -12,10 +12,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class RecipeDTO {
     private String name;
-    private final Set<String> categories = new HashSet<>();
+    private Set<String> categories = new HashSet<>();
     private String description;
     private String difficultyLevel;
-    private final Set<IngredientDTO> ingredients = new HashSet<>();
+    private Set<IngredientDTO> ingredients = new HashSet<>();
     private String instructions;
     private Integer preparationTime;
     private Integer servings;

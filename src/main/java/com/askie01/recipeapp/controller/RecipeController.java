@@ -20,7 +20,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @PostMapping(path = "save")
+    @PostMapping(path = "create")
     public ResponseEntity<Response> createRecipe(@RequestBody RecipeDTO recipeDTO) {
         recipeService.create(recipeDTO);
         return new ResponseEntity<>(

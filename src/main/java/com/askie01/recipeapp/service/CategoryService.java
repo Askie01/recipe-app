@@ -1,5 +1,6 @@
 package com.askie01.recipeapp.service;
 
+import com.askie01.recipeapp.exception.CategoryNotFoundException;
 import com.askie01.recipeapp.model.Category;
 import com.askie01.recipeapp.repository.CategoryRepository;
 import lombok.Data;
@@ -33,15 +34,12 @@ public class CategoryService {
         if (categoryExists) {
             return categoryOptional.get();
         } else {
-            return save(category);
+            String exceptionMessage = String.format("Category '%s' does not exist", name);
+            throw new CategoryNotFoundException(exceptionMessage);
         }
     }
 
     public Optional<Category> find(String name) {
         return categoryRepository.findByName(name);
-    }
-
-    public Category save(Category category) {
-        return categoryRepository.save(category);
     }
 }

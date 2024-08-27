@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "recipes")
 @ToString(callSuper = true, exclude = {"categories", "ingredients"})
 @EqualsAndHashCode(callSuper = true, exclude = {"categories", "ingredients"})
-public class Recipe extends NamedEntity {
+public class Recipe extends AuditableEntity {
 
     private String description;
     private Integer servings;

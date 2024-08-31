@@ -59,4 +59,19 @@ public class RecipeService {
                 );
         return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
     }
+
+    public void updateRecipe(RecipeDTO recipeDTO) {
+        final String name = recipeDTO.getName();
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                );
+        final Set<Ingredient> oldIngredients = recipe.getIngredients();
+        RecipeMapper.mapToRecipe(recipeDTO, recipe);
+        updateRecipeWithCategoryEntities(recipe);
+        updateRecipeWithIngredientEntities(recipe);
+        recipeRepository.save(recipe);
+        ingredientService.remove(oldIngredients);
+    }
 }

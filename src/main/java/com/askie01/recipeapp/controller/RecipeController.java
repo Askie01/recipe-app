@@ -34,4 +34,13 @@ public class RecipeController {
         final RecipeDTO recipeDTO = recipeService.getRecipe(name);
         return new ResponseEntity<>(recipeDTO, HttpStatus.OK);
     }
+
+    @PutMapping(path = "update")
+    public ResponseEntity<Response> updateRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+        recipeService.updateRecipe(recipeDTO);
+        return new ResponseEntity<>(
+                new Response(RecipeConstant.STATUS_200, RecipeConstant.MESSAGE_200),
+                HttpStatus.OK
+        );
+    }
 }

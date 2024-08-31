@@ -43,4 +43,13 @@ public class RecipeController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping(path = "delete")
+    public ResponseEntity<Response> deleteRecipe(@RequestParam String name) {
+        recipeService.deleteRecipe(name);
+        return new ResponseEntity<>(
+                new Response(RecipeConstant.STATUS_200, RecipeConstant.MESSAGE_200),
+                HttpStatus.OK
+        );
+    }
 }

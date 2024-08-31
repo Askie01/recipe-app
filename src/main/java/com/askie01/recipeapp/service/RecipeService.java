@@ -55,7 +55,7 @@ public class RecipeService {
         final Recipe recipe = recipeRepository
                 .findByName(name)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                        () -> new ResourceNotFoundException("Recipe", "name", name)
                 );
         return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
     }
@@ -65,13 +65,24 @@ public class RecipeService {
         final Recipe recipe = recipeRepository
                 .findByName(name)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                        () -> new ResourceNotFoundException("Recipe", "name", name)
                 );
         final Set<Ingredient> oldIngredients = recipe.getIngredients();
         RecipeMapper.mapToRecipe(recipeDTO, recipe);
         updateRecipeWithCategoryEntities(recipe);
         updateRecipeWithIngredientEntities(recipe);
         recipeRepository.save(recipe);
-        ingredientService.remove(oldIngredients);
+        ingredientService.delete(oldIngredients);
+    }
+
+    public void deleteRecipe(String name) {
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Recipe", "name", name)
+                );
+        final Set<Ingredient> ingredients = recipe.getIngredients();
+        recipeRepository.delete(recipe);
+        ingredientService.delete(ingredients);
     }
 }

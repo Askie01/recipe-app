@@ -23,7 +23,7 @@ public class IngredientService {
         return ingredientEntities;
     }
 
-    public void remove(Set<Ingredient> ingredients) {
+    public void delete(Set<Ingredient> ingredients) {
         ingredientRepository.deleteAll(ingredients);
     }
 }

@@ -45,6 +45,8 @@ public class RecipeService {
         recipe.setCategories(categoryEntities);
     }
 
+    //TODO - Move this method to some kind of mapper.
+    // This method creates issue when updating recipe ingredients.
     private void mapToIngredientEntities(Recipe recipe) {
         final Set<Ingredient> ingredients = recipe.getIngredients();
         final Set<Ingredient> ingredientEntities = ingredientService.getEntities(ingredients);
@@ -56,5 +58,18 @@ public class RecipeService {
                 .findByName(name)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe", "Name", name));
         return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
+    }
+
+    //TODO - This method is not working currently due to ingredient entity mapping.
+    public boolean update(RecipeDTO recipeDTO) {
+        final String name = recipeDTO.getName();
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "Name", name));
+        RecipeMapper.mapToRecipe(recipeDTO, recipe);
+        mapToCategoryEntities(recipe);
+        mapToIngredientEntities(recipe);
+//        recipeRepository.save(recipe);
+        return true;
     }
 }

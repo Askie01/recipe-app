@@ -2,7 +2,6 @@ package com.askie01.recipeapp.service;
 
 import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.exception.RecipeAlreadyExistsException;
-import com.askie01.recipeapp.exception.ResourceNotFoundException;
 import com.askie01.recipeapp.mapper.RecipeMapper;
 import com.askie01.recipeapp.model.Category;
 import com.askie01.recipeapp.model.Ingredient;
@@ -22,14 +21,20 @@ public class RecipeService {
     private final CategoryService categoryService;
     private final IngredientService ingredientService;
 
-    public void create(RecipeDTO recipeDTO) {
+    public void createRecipe(RecipeDTO recipeDTO) {
         final Recipe recipe = RecipeMapper.mapToRecipe(recipeDTO, new Recipe());
         final boolean recipeExists = exists(recipe);
         if (recipeExists) {
             throw new RecipeAlreadyExistsException(String.format("Recipe '%s' already exists", recipeDTO.getName()));
         }
-        mapToCategoryEntities(recipe);
-        mapToIngredientEntities(recipe);
+        final Set<Category> categories = recipe.getCategories();
+        final Set<Category> categoryEntities = categoryService.getCategoryEntities(categories);
+        recipe.setCategories(categoryEntities);
+
+        final Set<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Ingredient> ingredientEntities = ingredientService.save(ingredients);
+        recipe.setIngredients(ingredientEntities);
+
         recipeRepository.save(recipe);
     }
 
@@ -37,39 +42,5 @@ public class RecipeService {
         final String name = recipe.getName();
         final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
         return recipeOptional.isPresent();
-    }
-
-    private void mapToCategoryEntities(Recipe recipe) {
-        final Set<Category> categories = recipe.getCategories();
-        final Set<Category> categoryEntities = categoryService.getEntities(categories);
-        recipe.setCategories(categoryEntities);
-    }
-
-    //TODO - Move this method to some kind of mapper.
-    // This method creates issue when updating recipe ingredients.
-    private void mapToIngredientEntities(Recipe recipe) {
-        final Set<Ingredient> ingredients = recipe.getIngredients();
-        final Set<Ingredient> ingredientEntities = ingredientService.getEntities(ingredients);
-        recipe.setIngredients(ingredientEntities);
-    }
-
-    public RecipeDTO find(String name) {
-        final Recipe recipe = recipeRepository
-                .findByName(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "Name", name));
-        return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
-    }
-
-    //TODO - This method is not working currently due to ingredient entity mapping.
-    public boolean update(RecipeDTO recipeDTO) {
-        final String name = recipeDTO.getName();
-        final Recipe recipe = recipeRepository
-                .findByName(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe", "Name", name));
-        RecipeMapper.mapToRecipe(recipeDTO, recipe);
-        mapToCategoryEntities(recipe);
-        mapToIngredientEntities(recipe);
-//        recipeRepository.save(recipe);
-        return true;
     }
 }

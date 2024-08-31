@@ -1,0 +1,23 @@
+services:
+  database:
+    image: "mysql:latest"
+    container_name: "recipes-database"
+    ports:
+      - 3307:3306
+    env_file:
+      - "db.env"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  recipes:
+    image: "askie01/recipes:latest"
+    container_name: "recipes-application"
+    ports:
+      - 8080:8080
+    env_file:
+      - "jpa.env"
+    deploy:
+      resources:
+        limits:
+          memory: 700m

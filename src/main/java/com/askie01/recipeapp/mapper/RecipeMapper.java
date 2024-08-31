@@ -60,7 +60,7 @@ public class RecipeMapper {
 
     private static void mapCategories(RecipeDTO source, Recipe target) {
         final Set<String> categoryStrings = source.getCategories();
-        final Set<Category> categories = CategoryMapper.mapToCategory(categoryStrings);
+        final Set<Category> categories = CategoryMapper.mapToCategories(categoryStrings);
         target.setCategories(categories);
     }
 

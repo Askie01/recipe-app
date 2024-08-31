@@ -25,10 +25,33 @@ public class RecipeController {
 
     @PostMapping(path = "create")
     public ResponseEntity<Response> createRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
-        recipeService.create(recipeDTO);
+        recipeService.createRecipe(recipeDTO);
         return new ResponseEntity<>(
-                new Response(RecipeConstant.RECIPE_CREATED_CODE, RecipeConstant.RECIPE_CREATED_MESSAGE),
+                new Response(RecipeConstant.STATUS_201, RecipeConstant.MESSAGE_201),
                 HttpStatus.CREATED
         );
     }
+
+//    @GetMapping("get")
+//    public ResponseEntity<RecipeDTO> findRecipe(@Pattern(regexp = "[a-zA-Z0-9 -.,]{3,}", message = "The recipe name must be at least 3 characters")
+//                                                @RequestParam String name) {
+//        final RecipeDTO recipeDTO = recipeService.findByName(name);
+//        return new ResponseEntity<>(recipeDTO, HttpStatus.OK);
+//    }
+
+//    @PutMapping("update")
+//    public ResponseEntity<Response> updateRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+//        final boolean isUpdated = recipeService.update(recipeDTO);
+//        if (isUpdated) {
+//            return new ResponseEntity<>(
+//                    new Response(RecipeConstant.STATUS_200, RecipeConstant.MESSAGE_200),
+//                    HttpStatus.OK
+//            );
+//        } else {
+//            return new ResponseEntity<>(
+//                    new Response(RecipeConstant.STATUS_500, RecipeConstant.MESSAGE_500),
+//                    HttpStatus.INTERNAL_SERVER_ERROR
+//            );
+//        }
+//    }
 }

@@ -21,32 +21,32 @@ public class RecipeService {
     private final CategoryService categoryService;
     private final IngredientService ingredientService;
 
-    public void create(RecipeDTO recipeDTO) {
+    public void createRecipe(RecipeDTO recipeDTO) {
         final Recipe recipe = RecipeMapper.mapToRecipe(recipeDTO, new Recipe());
         final boolean recipeExists = exists(recipe);
         if (recipeExists) {
             throw new RecipeAlreadyExistsException(String.format("Recipe '%s' already exists", recipeDTO.getName()));
         }
-        mapToCategoryEntities(recipe);
-        mapToIngredientEntities(recipe);
+        updateRecipeWithCategoryEntities(recipe);
+        updateRecipeWithIngredientEntities(recipe);
         recipeRepository.save(recipe);
+    }
+
+    private void updateRecipeWithCategoryEntities(Recipe recipe) {
+        final Set<Category> categories = recipe.getCategories();
+        final Set<Category> categoryEntities = categoryService.getCategoryEntities(categories);
+        recipe.setCategories(categoryEntities);
+    }
+
+    private void updateRecipeWithIngredientEntities(Recipe recipe) {
+        final Set<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Ingredient> ingredientEntities = ingredientService.save(ingredients);
+        recipe.setIngredients(ingredientEntities);
     }
 
     private boolean exists(Recipe recipe) {
         final String name = recipe.getName();
         final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
         return recipeOptional.isPresent();
-    }
-
-    private void mapToCategoryEntities(Recipe recipe) {
-        final Set<Category> categories = recipe.getCategories();
-        final Set<Category> categoryEntities = categoryService.getEntities(categories);
-        recipe.setCategories(categoryEntities);
-    }
-
-    private void mapToIngredientEntities(Recipe recipe) {
-        final Set<Ingredient> ingredients = recipe.getIngredients();
-        final Set<Ingredient> ingredientEntities = ingredientService.getEntities(ingredients);
-        recipe.setIngredients(ingredientEntities);
     }
 }

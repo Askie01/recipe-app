@@ -9,7 +9,7 @@ import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CategoryMapper {
-    public static Set<Category> mapToCategory(Set<String> categoryNames) {
+    public static Set<Category> mapToCategories(Set<String> categoryNames) {
         final Set<Category> categories = new HashSet<>();
         categoryNames.forEach(categoryName -> {
             final Category category = new Category();

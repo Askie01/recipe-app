@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>com.askie01</groupId>
-    <artifactId>recipe-app</artifactId>
+    <artifactId>recipes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Recipe application</name>
+    <name>recipe-application</name>
     <description>Recipe application</description>
 
     <properties>

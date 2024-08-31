@@ -32,6 +32,12 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
+    private boolean exists(Recipe recipe) {
+        final String name = recipe.getName();
+        final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+        return recipeOptional.isPresent();
+    }
+
     private void updateRecipeWithCategoryEntities(Recipe recipe) {
         final Set<Category> categories = recipe.getCategories();
         final Set<Category> categoryEntities = categoryService.getCategoryEntities(categories);
@@ -42,11 +48,5 @@ public class RecipeService {
         final Set<Ingredient> ingredients = recipe.getIngredients();
         final Set<Ingredient> ingredientEntities = ingredientService.save(ingredients);
         recipe.setIngredients(ingredientEntities);
-    }
-
-    private boolean exists(Recipe recipe) {
-        final String name = recipe.getName();
-        final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
-        return recipeOptional.isPresent();
     }
 }

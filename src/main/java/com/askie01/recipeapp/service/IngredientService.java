@@ -22,4 +22,8 @@ public class IngredientService {
         });
         return ingredientEntities;
     }
+
+    public void remove(Set<Ingredient> ingredients) {
+        ingredientRepository.deleteAll(ingredients);
+    }
 }

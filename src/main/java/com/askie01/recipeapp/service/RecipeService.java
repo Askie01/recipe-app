@@ -2,6 +2,7 @@ package com.askie01.recipeapp.service;
 
 import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.exception.RecipeAlreadyExistsException;
+import com.askie01.recipeapp.exception.ResourceNotFoundException;
 import com.askie01.recipeapp.mapper.RecipeMapper;
 import com.askie01.recipeapp.model.Category;
 import com.askie01.recipeapp.model.Ingredient;
@@ -32,6 +33,12 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
+    private boolean exists(Recipe recipe) {
+        final String name = recipe.getName();
+        final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+        return recipeOptional.isPresent();
+    }
+
     private void updateRecipeWithCategoryEntities(Recipe recipe) {
         final Set<Category> categories = recipe.getCategories();
         final Set<Category> categoryEntities = categoryService.getCategoryEntities(categories);
@@ -44,9 +51,27 @@ public class RecipeService {
         recipe.setIngredients(ingredientEntities);
     }
 
-    private boolean exists(Recipe recipe) {
-        final String name = recipe.getName();
-        final Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
-        return recipeOptional.isPresent();
+    public RecipeDTO getRecipe(String name) {
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                );
+        return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
+    }
+
+    public void updateRecipe(RecipeDTO recipeDTO) {
+        final String name = recipeDTO.getName();
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                );
+        final Set<Ingredient> oldIngredients = recipe.getIngredients();
+        RecipeMapper.mapToRecipe(recipeDTO, recipe);
+        updateRecipeWithCategoryEntities(recipe);
+        updateRecipeWithIngredientEntities(recipe);
+        recipeRepository.save(recipe);
+        ingredientService.remove(oldIngredients);
     }
 }

@@ -5,15 +5,13 @@ import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.response.Response;
 import com.askie01.recipeapp.service.RecipeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Data
 @Validated
@@ -30,5 +28,12 @@ public class RecipeController {
                 new Response(RecipeConstant.RECIPE_CREATED_CODE, RecipeConstant.RECIPE_CREATED_MESSAGE),
                 HttpStatus.CREATED
         );
+    }
+
+    @GetMapping("get")
+    public ResponseEntity<RecipeDTO> findRecipe(@Pattern(regexp = "[a-zA-Z0-9 -.,]{3,}", message = "The recipe name must be at least 3 characters")
+                                                @RequestParam String name) {
+        final RecipeDTO recipeDTO = recipeService.find(name);
+        return new ResponseEntity<>(recipeDTO, HttpStatus.OK);
     }
 }

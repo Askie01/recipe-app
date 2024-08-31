@@ -27,15 +27,21 @@ public class RecipeService {
         if (recipeExists) {
             throw new RecipeAlreadyExistsException(String.format("Recipe '%s' already exists", recipeDTO.getName()));
         }
+        updateRecipeWithCategoryEntities(recipe);
+        updateRecipeWithIngredientEntities(recipe);
+        recipeRepository.save(recipe);
+    }
+
+    private void updateRecipeWithCategoryEntities(Recipe recipe) {
         final Set<Category> categories = recipe.getCategories();
         final Set<Category> categoryEntities = categoryService.getCategoryEntities(categories);
         recipe.setCategories(categoryEntities);
+    }
 
+    private void updateRecipeWithIngredientEntities(Recipe recipe) {
         final Set<Ingredient> ingredients = recipe.getIngredients();
         final Set<Ingredient> ingredientEntities = ingredientService.save(ingredients);
         recipe.setIngredients(ingredientEntities);
-
-        recipeRepository.save(recipe);
     }
 
     private boolean exists(Recipe recipe) {

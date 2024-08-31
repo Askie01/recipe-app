@@ -2,6 +2,7 @@ package com.askie01.recipeapp.service;
 
 import com.askie01.recipeapp.dto.RecipeDTO;
 import com.askie01.recipeapp.exception.RecipeAlreadyExistsException;
+import com.askie01.recipeapp.exception.ResourceNotFoundException;
 import com.askie01.recipeapp.mapper.RecipeMapper;
 import com.askie01.recipeapp.model.Category;
 import com.askie01.recipeapp.model.Ingredient;
@@ -48,5 +49,14 @@ public class RecipeService {
         final Set<Ingredient> ingredients = recipe.getIngredients();
         final Set<Ingredient> ingredientEntities = ingredientService.save(ingredients);
         recipe.setIngredients(ingredientEntities);
+    }
+
+    public RecipeDTO getRecipe(String name) {
+        final Recipe recipe = recipeRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Recipe", "Name", name)
+                );
+        return RecipeMapper.mapToRecipeDTO(recipe, new RecipeDTO());
     }
 }

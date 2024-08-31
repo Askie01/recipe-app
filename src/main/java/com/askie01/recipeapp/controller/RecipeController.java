@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Data
 @Validated
@@ -30,5 +27,11 @@ public class RecipeController {
                 new Response(RecipeConstant.STATUS_201, RecipeConstant.MESSAGE_201),
                 HttpStatus.CREATED
         );
+    }
+
+    @GetMapping(path = "get")
+    public ResponseEntity<RecipeDTO> getRecipe(@RequestParam String name) {
+        final RecipeDTO recipeDTO = recipeService.getRecipe(name);
+        return new ResponseEntity<>(recipeDTO, HttpStatus.OK);
     }
 }

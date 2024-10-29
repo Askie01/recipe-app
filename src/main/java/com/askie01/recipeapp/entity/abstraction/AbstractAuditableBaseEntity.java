@@ -1,5 +1,6 @@
-package com.askie01.recipeapp.model;
+package com.askie01.recipeapp.entity.abstraction;
 
+import com.askie01.recipeapp.entity.abstraction.common.AuditableBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -15,11 +16,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Data
-@MappedSuperclass
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
-public class AuditableEntity extends NamedEntity {
+@MappedSuperclass
+public abstract class AbstractAuditableBaseEntity extends AbstractBaseEntity
+        implements AuditableBaseEntity<Long, LocalDateTime, String> {
 
     @CreatedDate
     @Column(updatable = false)

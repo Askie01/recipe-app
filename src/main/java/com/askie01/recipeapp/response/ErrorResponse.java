@@ -1,6 +1,5 @@
 package com.askie01.recipeapp.response;
 
-import com.askie01.recipeapp.response.abstraction.Response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

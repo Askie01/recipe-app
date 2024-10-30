@@ -1,4 +1,4 @@
-package com.askie01.recipeapp.response.abstraction;
+package com.askie01.recipeapp.response;
 
 public interface Response<Code, Message> {
     Code getCode();

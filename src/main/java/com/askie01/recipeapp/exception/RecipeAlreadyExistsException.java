@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RecipeAlreadyExistsException extends RuntimeException {
-    public RecipeAlreadyExistsException(String message) {
-        super(message);
+    public RecipeAlreadyExistsException(Long id) {
+        super(String.format("Recipe with id '%d' already exists.", id));
     }
 }

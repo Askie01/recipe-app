@@ -1,17 +1,20 @@
 package com.askie01.recipeapp.response;
 
+import com.askie01.recipeapp.response.abstraction.Response;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponse {
+public class ErrorResponse implements Response<Integer, String> {
     private String path;
     private Integer code;
     private String message;
-    private LocalDateTime time;
+    private LocalDateTime timestamp;
 }

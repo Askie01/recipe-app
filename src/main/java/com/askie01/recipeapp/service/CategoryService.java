@@ -1,12 +1,13 @@
 package com.askie01.recipeapp.service;
 
+import com.askie01.recipeapp.entity.Category;
 import com.askie01.recipeapp.exception.ResourceNotFoundException;
-import com.askie01.recipeapp.model.Category;
 import com.askie01.recipeapp.repository.CategoryRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,5 +41,9 @@ public class CategoryService {
 
     public Optional<Category> findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
     }
 }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapp.repository;
 
-import com.askie01.recipeapp.model.Ingredient;
+import com.askie01.recipeapp.entity.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

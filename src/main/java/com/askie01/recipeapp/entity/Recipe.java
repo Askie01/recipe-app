@@ -1,6 +1,6 @@
 package com.askie01.recipeapp.entity;
 
-import com.askie01.recipeapp.entity.abstraction.AbstractAuditableBaseEntity;
+import com.askie01.recipeapp.entity.abstraction.AbstractAuditableNamedEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,9 +15,8 @@ import java.util.Set;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Recipe extends AbstractAuditableBaseEntity {
+public class Recipe extends AbstractAuditableNamedEntity {
 
-    private String title;
     private String description;
 
     @ManyToOne
@@ -42,5 +41,7 @@ public class Recipe extends AbstractAuditableBaseEntity {
 
     private Double servings;
     private Integer preparationTime;
+
+    @Column(columnDefinition = "TEXT")
     private String instructions;
 }

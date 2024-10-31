@@ -1,6 +1,6 @@
 package com.askie01.recipeapp.service;
 
-import com.askie01.recipeapp.model.Ingredient;
+import com.askie01.recipeapp.entity.Ingredient;
 import com.askie01.recipeapp.repository.IngredientRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
